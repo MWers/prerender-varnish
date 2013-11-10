@@ -2,6 +2,8 @@
 
 prerender-varnish is a Varnish configuration for serving pre-rendered HTML from Javascript pages/apps using [prerender.io](http://prerender.io/).
 
+prerender-varnish is currently in a pre-alpha state and is actively being developed. Anything can *and likely will* change.
+
 ## Using prerender-varnish
 
 To use prerender-varnish, symlink `prerender.vcl` and `prerender_backend.vcl` in your Varnish configuration directory (usually `/etc/varnish`) and add them to your primary Varnish configuration file:
