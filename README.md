@@ -1,6 +1,6 @@
 # prerender-varnish
 
-prerender-varnish is an example Varnish configuration for serving pre-rendered HTML from Javascript pages/apps using [prerender.io](http://prerender.io/).
+prerender-varnish is a Varnish configuration for serving pre-rendered HTML from Javascript pages/apps using [prerender.io](http://prerender.io/).
 
 ## Using prerender-varnish
 
