@@ -4,7 +4,7 @@ prerender-varnish is a Varnish configuration for serving pre-rendered HTML from 
 
 ## Using prerender-varnish
 
-To use prerender-varnish, symlink `prerender.vcl` and `prerender_backend.vcl` in your Varnish configuration directory (usually `/etc/varnish`) and add them to your primary Varnish configuration file with the following line:
+To use prerender-varnish, symlink `prerender.vcl` and `prerender_backend.vcl` in your Varnish configuration directory (usually `/etc/varnish`) and add them to your primary Varnish configuration file:
 
 ```c
 include "prerender.vcl";
@@ -17,7 +17,7 @@ The prerender.io rendering service is hosted on Heroku and Heroku (and AWS ELB) 
 Run `backend_generator.py` as follows:
 
 ```bash
-VARNISH_SECRET=xxxxxxx python backend_generator.py [/etc/varnish/prerender_backend.vcl]
+VARNISH_SECRET=xxxxxxx python backend_generator.py [host] [port]
 ```
 
 With TTLs for these DNS records set quite low, it is advised to run this very frequently. Once per minute should be sufficient.
