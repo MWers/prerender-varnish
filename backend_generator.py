@@ -26,7 +26,7 @@ import socket
 desc = """Generate a Varnish backend configuration given a hostname."""
 
 parser = optparse.OptionParser(description=desc)
-parser.add_option('--hostname',
+parser.add_option('-n', '--hostname',
                   dest='hostname',
                   help='prerender.io rendering backend hostname',
                   default='prerender.herokuapp.com')
@@ -37,12 +37,17 @@ parser.add_option('-p', '--port',
                   default=80)
 parser.add_option('-d', '--dest',
                   dest='backend_conf',
-                  help='varnish backend configuration file to overwrite',
+                  help='varnish backend conf file to overwrite',
                   default='/etc/varnish/prerender_backend.vcl')
+parser.add_option('-q', '--quiet',
+                  action='store_true',
+                  dest='quiet',
+                  help='don\'t display generated conf',
+                  default=False)
 parser.add_option('--dry-run',
                   action='store_true',
                   dest='dry_run',
-                  help='output to stdout, don\'t write to conf file',
+                  help='don\'t write to conf file or reload Varnish',
                   default=False)
 (opts, args) = parser.parse_args()
 
@@ -76,6 +81,7 @@ director = TPL_DIRECTOR % (nodes)
 try:
     filehash = hashlib.sha256(open(opts.backend_conf, 'rb').read()).hexdigest()
 except IOError:
+    # Assume no file exists and set hash to '' so that it wil be created
     filehash = ''
 stringhash = hashlib.sha256(director).hexdigest()
 
@@ -92,8 +98,9 @@ if filehash != stringhash:
 
     # TODO: Reload Varnish configuration
 
-print "Generated Varnish conf:"
-print director
+if not opts.quiet:
+    print "Generated Varnish conf:"
+    print director
 
 
 # def main():
