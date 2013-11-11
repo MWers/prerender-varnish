@@ -17,6 +17,8 @@ sub vcl_recv {
             return(pass);
         }
 
+        # FIXME: Add a whitelist of files or filetypes to never prerender
+
         set req.backend = prerender;
 
         # When doing SSL offloading in front of Varnish, set X-Scheme header
@@ -35,6 +37,17 @@ sub vcl_miss {
         set bereq.http.Host = "prerender.herokuapp.com";
         set bereq.http.X-Real-IP = client.ip;
         set bereq.http.X-Forwarded-For = client.ip;
+
+        # If you're using hosted prerender.io, set your token here to enable
+        # stat collection.
+        #
+        # IMPORTANT: This information is cached for the lifespan of
+        # the Varnish daemon. If you change your token, you must restart Varnish.
+        #
+        # FIXME: This would ideally be handled via environment variables.
+        # I don't think that environment variables are available in Varnish.
+        # I'm looking into it.
+        set bereq.http.X-Prerender-Token = std.fileread("/etc/varnish/prerender_token.txt");
     }
 }
 
