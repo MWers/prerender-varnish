@@ -49,7 +49,7 @@ parser.add_option('--dry-run',
 TPL_NODE = '''    {
         .backend = {
             .host = "%s";
-            .port = %d;
+            .port = "%d";
         }
         .weight = 1;
     }
