@@ -7,6 +7,8 @@
 # http://blog.cloudreach.co.uk/2013/01/varnish-and-autoscaling-love-story.html
 #
 
+import std
+
 include "prerender_backend.vcl";
 
 sub vcl_recv {
