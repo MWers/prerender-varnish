@@ -29,7 +29,7 @@ parser = optparse.OptionParser(description=desc)
 parser.add_option('-n', '--hostname',
                   dest='hostname',
                   help='prerender.io rendering backend hostname',
-                  default='prerender.herokuapp.com')
+                  default='service.prerender.io')
 parser.add_option('-p', '--port',
                   dest='port',
                   help='prerender.io rendering backend port',

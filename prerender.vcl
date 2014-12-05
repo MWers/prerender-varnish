@@ -36,7 +36,7 @@ sub vcl_recv {
 
 sub vcl_miss {
     if (req.backend == prerender) {
-        set bereq.http.Host = "prerender.herokuapp.com";
+        set bereq.http.Host = "service.prerender.io";
         set bereq.http.X-Real-IP = client.ip;
         set bereq.http.X-Forwarded-For = client.ip;
 
