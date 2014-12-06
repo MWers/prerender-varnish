@@ -3,7 +3,7 @@
 # backend_generator.py. See README.md for details.
 #
 backend prerender {
-    .host = "prerender.herokuapp.com";
+    .host = "service.prerender.io";
     .port = "80";
 }
 
