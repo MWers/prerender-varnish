@@ -19,7 +19,25 @@ The prerender.io rendering service is hosted on Heroku and Heroku (and AWS ELB) 
 Run `backend_generator.py` as follows:
 
 ```bash
-VARNISH_SECRET=xxxxxxx python backend_generator.py [host] [port]
+VARNISH_SECRET=xxxxxxx python backend_generator.py
+
+Usage: backend_generator.py [options]
+
+Generate a Varnish backend configuration given a hostname.
+
+Options:
+  -h, --help            show this help message and exit
+  -n HOSTNAME, --hostname=HOSTNAME
+                        prerender.io rendering backend hostname [default:
+                        service.prerender.io]
+  -p PORT, --port=PORT  prerender.io rendering backend port [default: 80]
+  -d BACKEND_CONF, --dest=BACKEND_CONF
+                        varnish backend conf file to overwrite [default:
+                        /etc/varnish/prerender_backend.vcl]
+  -r, --reload-varnish  reload varnish on completion [default: False]
+  -v, --verbose         show verbose output [default: False]
+  --dry-run             don't write to conf file or reload Varnish [default:
+                        False]
 ```
 
 With TTLs for these DNS records set quite low, it is advised to run this very frequently. Once per minute should be sufficient.

@@ -29,31 +29,37 @@ desc = """Generate a Varnish backend configuration given a hostname."""
 parser = optparse.OptionParser(description=desc)
 parser.add_option('-n', '--hostname',
                   dest='hostname',
-                  help='prerender.io rendering backend hostname',
+                  help='prerender.io rendering backend hostname '
+                       '[default: %default]',
                   default='service.prerender.io')
 parser.add_option('-p', '--port',
                   dest='port',
-                  help='prerender.io rendering backend port',
+                  help='prerender.io rendering backend port '
+                       '[default: %default]',
                   type='int',
                   default=80)
 parser.add_option('-d', '--dest',
                   dest='backend_conf',
-                  help='varnish backend conf file to overwrite',
+                  help='varnish backend conf file to overwrite '
+                       '[default: %default]',
                   default='/etc/varnish/prerender_backend.vcl')
 parser.add_option('-r', '--reload-varnish',
                   action='store_true',
                   dest='reloadvarnish',
-                  help='reload varnish on completion',
+                  help='reload varnish on completion '
+                       '[default: %default]',
                   default=False)
 parser.add_option('-v', '--verbose',
                   action='store_true',
                   dest='verbose',
-                  help='show verbose output',
+                  help='show verbose output '
+                       '[default: %default]',
                   default=False)
 parser.add_option('--dry-run',
                   action='store_true',
                   dest='dry_run',
-                  help='don\'t write to conf file or reload Varnish',
+                  help='don\'t write to conf file or reload Varnish '
+                       '[default: %default]',
                   default=False)
 (opts, args) = parser.parse_args()
 
