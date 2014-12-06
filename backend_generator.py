@@ -16,12 +16,13 @@
 # TODO: Add logging
 # TODO: Add notifications
 # TODO: Add error checking
-# TODO: Add Varnish reloading
 #
 
 import hashlib
 import optparse
+import os
 import socket
+import sys
 
 desc = """Generate a Varnish backend configuration given a hostname."""
 
@@ -39,10 +40,15 @@ parser.add_option('-d', '--dest',
                   dest='backend_conf',
                   help='varnish backend conf file to overwrite',
                   default='/etc/varnish/prerender_backend.vcl')
-parser.add_option('-q', '--quiet',
+parser.add_option('-r', '--reload-varnish',
                   action='store_true',
-                  dest='quiet',
-                  help='don\'t display generated conf',
+                  dest='reloadvarnish',
+                  help='reload varnish on completion',
+                  default=False)
+parser.add_option('-v', '--verbose',
+                  action='store_true',
+                  dest='verbose',
+                  help='show verbose output',
                   default=False)
 parser.add_option('--dry-run',
                   action='store_true',
@@ -71,7 +77,10 @@ addrs = set(rawaddrs)
 
 # Make sure that there was at least one ip address returned
 if not addrs:
-    1  # FIXME: Send notification and exit
+    # TODO: Send some sort of notification here.
+    print ("The hostname '%s' did not resolve to any IP addresses." %
+           opts.hostname)
+    sys.exit(1)
 
 # Build backend node array and director
 nodes = ''.join([(TPL_NODE % (addr, opts.port)) for addr in addrs])
@@ -91,26 +100,22 @@ if filehash != stringhash:
         backend_conf.write(director)
         backend_conf.close()
 
-        print "Updated backend configuration"
+        if opts.verbose:
+            print "Updated backend configuration"
     else:
-        print ("Backend configuration in %s differs from generated director" %
-               (opts.backend_conf))
+        if opts.verbose:
+            print ("Backend configuration in %s differs from generated "
+                   "director" % (opts.backend_conf))
 
-    # TODO: Reload Varnish configuration
+    # Reload Varnish configuration
+    if opts.reloadvarnish:
+        if opts.verbose:
+            print "Checking Varnish configuration"
+        if os.system('service varnish configtest') == 0:
+            if opts.verbose:
+                print "Reloading Varnish"
+            os.system('service varnish reload')
 
-if not opts.quiet:
+if opts.verbose:
     print "Generated Varnish conf:"
     print director
-
-
-# def main():
-#     return
-#     # generate_homepages()
-#     # copy_to_working_dir()
-#     # customize_for_servers()
-#     # deploy_to_production()
-#     # log_generation()
-
-
-# if __name__ == '__main__':
-#     main()

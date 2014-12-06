@@ -13,7 +13,7 @@ include "prerender_backend.vcl";
 
 sub vcl_recv {
     if (req.url ~ "_escaped_fragment_|prerender=1" ||
-         req.http.user-agent ~ "googlebot|yahoo|bingbot|baiduspider|yandex|yeti|yodaobot|gigabot|ia_archiver|facebookexternalhit|twitterbot|developers\.google\.com") {
+         req.http.user-agent ~ "baiduspider|twitterbot|facebookexternalhit|rogerbot|linkedinbot|embedly|quora link preview|showyoubot|outbrain|pinterest|slackbot") {
 
         if (req.http.user-agent ~ "Prerender") {
             return(pass);

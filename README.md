@@ -1,8 +1,8 @@
 # prerender-varnish
 
-prerender-varnish is a Varnish configuration for serving pre-rendered HTML from Javascript pages/apps using [prerender.io](http://prerender.io/).
+prerender-varnish is a Varnish 3 configuration for serving pre-rendered HTML from Javascript pages/apps using [prerender.io](http://prerender.io/).
 
-prerender-varnish is currently in a pre-alpha state and is actively being developed. Anything can *and likely will* change.
+prerender-varnish is currently in a pre-alpha state. Anything can *and likely will* change.
 
 ## Using prerender-varnish
 
@@ -14,7 +14,7 @@ include "prerender.vcl";
 
 ## Updating prerender.io backend
 
-The prerender.io rendering service is hosted on Heroku and Heroku (and AWS ELB) domains resolve to multiple IP addresses. Varnish requires backend hosts to resolve to a single IP address. As a workaround, `backend_generator.py` will query DNS for the prerender.io rendering service, generate a Varnish director containing all rendering service IP addresses, write it to `prerender_backend.vcl`, and reload Varnish when the configuration changes.
+The prerender.io rendering service is hosted on Heroku and Heroku (and AWS ELB) domains resolve to multiple IP addresses. Varnish requires backend hosts to resolve to a single unchanging IP address. As a workaround, `backend_generator.py` will query DNS for the prerender.io rendering service, generate a Varnish director containing all rendering service IP addresses, write it to `prerender_backend.vcl`, and reload Varnish when the configuration changes.
 
 Run `backend_generator.py` as follows:
 
