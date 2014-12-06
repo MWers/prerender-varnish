@@ -14,13 +14,11 @@ include "prerender.vcl";
 
 ## Updating prerender.io backend
 
-The prerender.io rendering service is hosted on Heroku and Heroku (and AWS ELB) domains resolve to multiple IP addresses. Varnish requires backend hosts to resolve to a single unchanging IP address. As a workaround, `backend_generator.py` will query DNS for the prerender.io rendering service, generate a Varnish director containing all rendering service IP addresses, write it to `prerender_backend.vcl`, and reload Varnish when the configuration changes.
+The prerender.io rendering service is hosted on Heroku and Heroku (and AWS ELB) domains resolve to multiple IP addresses. Varnish currently requires backend hosts to resolve to a single unchanging IP address. As a workaround, `backend_generator.py` will query DNS for the prerender.io rendering service, generate a Varnish director containing all rendering service IP addresses, write it to `prerender_backend.vcl`, and reload Varnish when the configuration changes.
 
 Run `backend_generator.py` as follows:
 
-```bash
-VARNISH_SECRET=xxxxxxx python backend_generator.py
-
+```txt
 Usage: backend_generator.py [options]
 
 Generate a Varnish backend configuration given a hostname.
